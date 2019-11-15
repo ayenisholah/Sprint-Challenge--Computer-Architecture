@@ -2,6 +2,12 @@
     CPU functionality.
 """
 import sys
+PRN = 0b01000111
+LDI = 0b10000010
+CMP = 0b10100111
+JMP = 0b01010100
+JEQ = 0b01010101
+JNE = 0b01010110
 
 
 class CPU:
@@ -15,6 +21,12 @@ class CPU:
         self.ram = [0] * 256
         self.pc = 0
         self.sp = 7
+
+        # state (running)
+        self.running = True
+
+        # REPL (FETCH, DECODE, EXECUTE)
+        self.op_pc = False
 
     def ram_read(self, index):
         return(self.ram[index])
@@ -82,3 +94,28 @@ class CPU:
             print(" %02X" % self.reg[i], end='')
 
         print()
+
+    def run(self):
+        """Run the CPU."""
+        command = self.ram[self.pc]
+
+        if len(sys.argv) != 2:
+            print("usage: cpy.py filename")
+            sys.exit(1)
+
+        self.program_filename = sys.argv[1]
+        self.load()
+
+        while self.running:
+            command = self.ram[self.pc]
+            operand_a = self.ram_read(self.pc + 1)
+            operand_b = self.ram_read(self.pc + 2)
+
+            if command in self.branch_table:
+                self.branch_table[command](operand_a, operand_b)
+            else:
+                sys.exit(1)
+
+
+cpu = CPU()
+cpu.run()
