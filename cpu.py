@@ -111,6 +111,14 @@ class CPU:
         if not self.op_pc:
             self.pc += 3
 
+    def prn(self, op_a, op_b):
+        # Print numeric value stored in the given register.
+        print(self.reg[op_a])
+
+        self.op_pc = False
+        if not self.op_pc:
+            self.pc += 2
+
     def run(self):
         """Run the CPU."""
         command = self.ram[self.pc]
