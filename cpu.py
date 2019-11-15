@@ -28,6 +28,14 @@ class CPU:
         # REPL (FETCH, DECODE, EXECUTE)
         self.op_pc = False
 
+        self.branch_table = {}
+        self.branch_table[PRN] = self.prn
+        self.branch_table[LDI] = self.ldi
+        self.branch_table[CMP] = self.cmp
+        self.branch_table[JMP] = self.jmp
+        self.branch_table[JEQ] = self.jeq
+        self.branch_table[JNE] = self.jne
+
     def ram_read(self, index):
         return(self.ram[index])
 
@@ -94,6 +102,14 @@ class CPU:
             print(" %02X" % self.reg[i], end='')
 
         print()
+
+    def ldi(self, op_a, op_b):
+        # Set the value of a register to an integer.
+        self.reg[op_a] = op_b
+        self.op_pc = False
+
+        if not self.op_pc:
+            self.pc += 3
 
     def run(self):
         """Run the CPU."""
