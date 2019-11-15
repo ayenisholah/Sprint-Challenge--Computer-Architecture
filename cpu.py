@@ -119,6 +119,19 @@ class CPU:
         if not self.op_pc:
             self.pc += 2
 
+    def cmp(self, op_a, op_b):
+        # If they are equal, set the Equal E flag to 1
+        if self.reg[op_a] == self.reg[op_b]:
+            self.equal = 1
+        # otherwise set it to 0.
+        else:
+            self.equal = 0
+
+        self.op_pc = False
+
+        if not self.op_pc:
+            self.pc += 3
+
     def run(self):
         """Run the CPU."""
         command = self.ram[self.pc]
