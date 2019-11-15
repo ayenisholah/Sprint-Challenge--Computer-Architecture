@@ -142,6 +142,15 @@ class CPU:
         if not self.op_pc:
             self.pc += 2
 
+    def jeq(self, op_a, op_b):
+        # If equal flag is set(true), jump to the address stored in the given register.
+        if self.equal == 1:
+            self.pc = self.reg[op_a]
+            self.op_pc = True
+
+        if not self.op_pc:
+            self.pc += 2
+
     def run(self):
         """Run the CPU."""
         command = self.ram[self.pc]
