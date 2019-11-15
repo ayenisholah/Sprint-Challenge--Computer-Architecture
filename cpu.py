@@ -151,6 +151,15 @@ class CPU:
         if not self.op_pc:
             self.pc += 2
 
+    def jne(self, op_a, op_b):
+        # If E flag is clear (false, 0), jump to the address stored in the given register.
+        if self.equal == 0:
+            self.pc = self.reg[op_a]
+            self.op_pc = True
+
+        if not self.op_pc:
+            self.pc += 2
+
     def run(self):
         """Run the CPU."""
         command = self.ram[self.pc]
