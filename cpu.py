@@ -132,6 +132,16 @@ class CPU:
         if not self.op_pc:
             self.pc += 3
 
+    def jmp(self, op_a, op_b):
+        # Jump to the address stored in the given register.
+        # Set the PC to the address stored in the given register.
+        self.pc = self.reg[op_a]
+
+        self.op_pc = True
+
+        if not self.op_pc:
+            self.pc += 2
+
     def run(self):
         """Run the CPU."""
         command = self.ram[self.pc]
