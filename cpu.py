@@ -53,3 +53,22 @@ class CPU:
         for instructions in program:
             self.ram[address] = instructions
             address += 1
+
+    def alu(self, op, reg_a, reg_b):
+        """ALU operations."""
+
+        if op == "ADD":
+            self.reg[reg_a] += self.reg[reg_b]
+        elif op == "SUB":
+            self.reg[reg_a] -= self.reg[reg_b]
+        elif op == "HLT":
+            self.reg[reg_a] -= self.reg[reg_b]
+        elif op == "SAVE":
+            self.reg[reg_a] -= self.reg[reg_b]
+        elif op == "PRINT_NUM":
+            self.reg[reg_a] -= self.reg[reg_b]
+        elif op == "PRINT_REG":
+            self.reg[reg_a] -= self.reg[reg_b]
+
+        else:
+            raise Exception("Unsupported ALU operation")
